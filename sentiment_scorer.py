@@ -13,12 +13,12 @@ Provides many emotions: SamLowe/roberta-base-go_emotions
 Provides Pos/Neu/Neg: cardiffnlp/twitter-roberta-base-sentiment-latest
 '''
 
-tokenizer = AutoTokenizer.from_pretrained('nlptown/bert-base-multilingual-uncased-sentiment')
-model = AutoModelForSequenceClassification.from_pretrained('nlptown/bert-base-multilingual-uncased-sentiment')
+sentiment_tokenizer = AutoTokenizer.from_pretrained('nlptown/bert-base-multilingual-uncased-sentiment')
+BERT_model = AutoModelForSequenceClassification.from_pretrained('nlptown/bert-base-multilingual-uncased-sentiment')
 
 def get_sentiment_score(text):
-    tokens = tokenizer.encode(text, return_tensors='pt')
-    result = model(tokens)
+    tokens = sentiment_tokenizer .encode(text, return_tensors='pt')
+    model_output = BERT_model(tokens)
     # Get the sentiment (0,1,2,3,4) and +1 to get 1-5 score
-    sentiment = int(torch.argmax(result.logits))+1
-    return sentiment
+    sentiment_score = int(torch.argmax(model_output.logits))+1
+    return sentiment_score
